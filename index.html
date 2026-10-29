@@ -87,26 +87,23 @@
       // JS_FileSystem_Sync() behavior, but in future Unity version, this will be
       // expected to change.
 
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
+     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+  var meta = document.createElement('meta');
+  meta.name = 'viewport';
+  meta.content = 'width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+  document.getElementsByTagName('head')[0].appendChild(meta);
 
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
-        document.querySelector("#unity-container").className = "unity-mobile";
-        canvas.className = "unity-mobile";
+  // Ventana más pequeña en móvil (35% del ancho, proporción 16:10)
+  canvas.style.width = "35vw";
+  canvas.style.height = "calc(35vw * 600 / 960)";
+  canvas.style.margin = "0 auto";
+  canvas.style.display = "block";
 
-        // To lower canvas resolution on mobile devices to gain some
-        // performance, uncomment the following line:
-        // config.devicePixelRatio = 1;
-
-
-      } else {
-        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
-        canvas.style.width = "960px";
-        canvas.style.height = "600px";
-      }
+} else {
+  // Escritorio: ventana más pequeña (640x400 mantiene la proporción 16:10)
+  canvas.style.width = "540px";
+  canvas.style.height = "200px";
+}
 
       document.querySelector("#unity-loading-bar").style.display = "block";
 
